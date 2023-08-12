@@ -1,0 +1,105 @@
+// Definición de esquema para Usuarios
+const userSchema = new Schema({
+    username: { type: String, required: true },
+    // Otros campos relevantes para usuarios
+  });
+  
+  // Definición de esquema para Productos
+  const productSchema = new Schema({
+    name: { type: String, required: true },
+    // Otros campos relevantes para productos
+  });
+  
+  // Definición de esquema para Transacciones
+  const transactionSchema = new Schema({
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true }, // Referencia al Usuario
+    products: [{ type: Schema.Types.ObjectId, ref: 'Product' }], // Referencias a los Productos en la transacción
+    // Otros campos relevantes para transacciones
+  });
+  
+  // Definición de esquema para Reseñas
+  const reviewSchema = new Schema({
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true }, // Referencia al Usuario que escribió la reseña
+    product: { type: Schema.Types.ObjectId, ref: 'Product', required: true }, // Referencia al Producto reseñado
+    transaction: { type: Schema.Types.ObjectId, ref: 'Transaction', required: true }, // Referencia a la Transacción de compra relacionada
+    rating: { type: Number, required: true },
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    // Otros campos relevantes para reseñas
+  });
+  
+  // Modelos basados en los esquemas
+  const User = mongoose.model('User', userSchema);
+  const Product = mongoose.model('Product', productSchema);
+  const Transaction = mongoose.model('Transaction', transactionSchema);
+  const Review = mongoose.model('Review', reviewSchema);
+
+
+
+
+
+  //Sin usar mongoose!!!
+
+  use("mz_store");
+
+// Definición de esquema para Productos
+
+PRODUCTOS
+db.createCollection("products", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["_id", "name"],
+      properties: {
+        _id: { bsonType: "objectId" },
+        name: {
+          bsonType: "string",
+        },
+       
+      }
+    }
+  }
+});
+TRANSACCIONES
+
+db.createCollection("transactions", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["_id", "user", "products"],
+      properties: {
+        _id: { bsonType: "objectId" },
+        user: { bsonType: "objectId" }, // Referencia al Usuario
+        products: {
+          bsonType: "array",
+          items: {
+            bsonType: "objectId" // Referencias a los Productos en la transacción
+          }
+        },
+        
+      }
+    }
+  }
+});
+RESEÑAS
+// Definición de esquema para Reseñas
+db.createCollection("reviews", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["_id", "user", "product", "transaction", "rating", "title", "description"],
+      properties: {
+        _id: { bsonType: "objectId" },
+        user: { bsonType: "objectId" }, // Referencia al Usuario que escribió la reseña
+        product: { bsonType: "objectId" }, // Referencia al Producto reseñado
+        transaction: { bsonType: "objectId" }, // Referencia a la Transacción de compra relacionada
+        rating: { bsonType: "number" },
+        title: { bsonType: "string" },
+        description: { bsonType: "string" },
+        
+      }
+    }
+  }
+});
+
+  

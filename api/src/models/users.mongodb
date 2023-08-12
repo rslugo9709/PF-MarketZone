@@ -1,0 +1,93 @@
+use("mz_store");
+
+
+db.createCollection("users", {
+    validator: {
+      $jsonSchema: {
+        bsonType: "object",
+        required: ["_id", "email", "password", "role"],
+        properties: {
+        _id: { bsonType: "objectId" },
+          name: {
+            bsonType: "string",
+            description: "'name' must be a string and is required"
+          },
+          last_name: {
+            bsonType: "string",
+          },
+          email: {
+            bsonType: "string",
+          },
+          password: {
+            bsonType: "string",
+            pattern: '^[A-Za-z0-9]{8,}$'
+          },
+          age: {
+            bsonType: "number",
+            minimum: 14,
+            maximum: 99,
+          },
+          role: {
+            enum: ["customer", "seller", "admin"],
+          },
+          phoneNumber: {
+            bsonType: "number",
+          },
+          address: {
+            bsonType: "object",
+            required: ["_id", "street", "streetNumber", "postalCode", "city"],
+            properties: {
+            _id: { "bsonType": "objectId" },
+            street: {
+                bsonType: "string",
+            },
+            streetNumber: {
+                bsonType: "number",
+            },
+            postalCode: {
+                bsonType: "number",
+            },
+            townNeighborhood: {
+                bsonType: "string",
+            },
+            floorApartment: {
+                bsonType: "string",
+            },
+            city: {
+                bsonType: "string",
+            },
+        }
+          },
+          shippingAddress: {
+            bsonType: "object",
+            required: ["_id", "street", "streetNumber", "postalCode", "city"],
+            properties: {
+             _id: { "bsonType": "objectId" },
+            street: {
+                bsonType: "string",
+            },
+            streetNumber: {
+                bsonType: "number",
+            },
+            postalCode: {
+                bsonType: "number",
+            },
+            townNeighborhood: {
+                bsonType: "string",
+            },
+            floorApartment: {
+                bsonType: "string",
+            },
+            city: {
+                bsonType: "string",
+            },
+            additionalInformation: {
+                bsonType: "string",
+            }
+        }
+          }
+        },
+      },
+  "additionalProperties": false,
+    },
+  });

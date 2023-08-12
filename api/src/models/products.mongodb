@@ -1,0 +1,34 @@
+use("mz_store")
+
+
+db.createCollection("product", {
+    validator: {
+      $jsonSchema: {
+        bsonType: "object",
+        required: ["_id", "name"],
+        properties: {
+            _id: { bsonType: "objectId" },
+
+        name: {
+            bsonType: "string",
+            description: "'name' must be a string and is required"
+        },
+        price: {
+            bsonType: "number",
+        },
+        image: {
+            bsonType: "string",
+        },
+        description: {
+            bsonType: "string",
+        },
+        stock: {
+            bsonType: "number",
+        },
+        tags:{
+            bsonType: "string"
+        }
+        },
+      },
+    },
+  });

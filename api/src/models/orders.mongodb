@@ -1,0 +1,25 @@
+use("mz_store");
+
+db.createCollection("purchases", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["_id", "user", "products", "totalPrice", "paymentMethod"],
+      properties: {
+        _id: { bsonType: "objectId" },
+        user: { bsonType: "objectId" }, // Referencia al Usuario
+        products: {
+          bsonType: "array",
+          items: {
+            bsonType: "objectId" // Referencias a los Productos en la compra
+          }
+        },
+        totalPrice: { bsonType: "number" },
+        paymentMethod: { bsonType: "string" }, // Método de pago utilizado
+        transactionDate: { bsonType: "date" }, // Fecha y hora de la transacción
+        transactionStatus: { bsonType: "string" }, // Estado de la transacción (completada, pendiente, etc.)
+        // Otros campos relevantes para la compra y la transacción
+      }
+    }
+  }
+});
