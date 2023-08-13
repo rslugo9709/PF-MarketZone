@@ -13,8 +13,19 @@ const port = process.env.PORT_SERVER || 3004;
 // eslint-disable-line //no-console
 //  });
 //});
-connectToDatabase.then(()=>{
-server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});})
+async function startServer() {
+  try {
+    const db = await connectToDatabase(); 
+    console.log("Database connected:", db.databaseName);
 
+
+
+    server.listen(port, () => {
+      console.log(`Server listening on port ${port}`);
+    });
+  } catch (error) {
+    console.error("Error starting the server:", error);
+  }
+}
+
+startServer();

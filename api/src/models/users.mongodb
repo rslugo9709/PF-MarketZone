@@ -1,13 +1,15 @@
 use("mz_store");
 
 
+
+
 db.createCollection("users", {
     validator: {
       $jsonSchema: {
         bsonType: "object",
         required: ["_id", "email", "password", "role"],
         properties: {
-        _id: { bsonType: "objectId" },
+        _id: { bsonType: "objectId" }, 
           name: {
             bsonType: "string",
             description: "'name' must be a string and is required"
@@ -59,6 +61,9 @@ db.createCollection("users", {
         }
           },
           shippingAddress: {
+            bsonType: "array",
+          items: {
+           
             bsonType: "object",
             required: ["_id", "street", "streetNumber", "postalCode", "city"],
             properties: {
@@ -86,6 +91,7 @@ db.createCollection("users", {
             }
         }
           }
+        }
         },
       },
   "additionalProperties": false,
